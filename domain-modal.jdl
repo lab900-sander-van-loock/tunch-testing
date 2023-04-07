@@ -1,0 +1,30 @@
+entity Beer {
+  name String required,
+  brewery String,
+  percentage Double required,
+}
+
+
+entity BeerBottle {
+  id UUID required,
+  expirationDate LocalDate required,
+}
+
+
+entity Fridge {
+  name String required,
+  location String,
+}
+
+
+relationship ManyToOne {
+  BeerBottle{beer} to Beer
+}
+
+relationship OneToMany {
+  Fridge to BeerBottle{fridge}
+}
+
+paginate BeerBottle with pagination
+
+service all with serviceImpl except Beer, Fridge
