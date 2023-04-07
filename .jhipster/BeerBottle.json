@@ -7,8 +7,7 @@
   "fields": [
     {
       "fieldName": "id",
-      "fieldType": "UUID",
-      "fieldValidateRules": ["required"]
+      "fieldType": "UUID"
     },
     {
       "fieldName": "expirationDate",

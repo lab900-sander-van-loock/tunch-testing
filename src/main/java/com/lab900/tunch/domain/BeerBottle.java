@@ -17,10 +17,9 @@ public class BeerBottle implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull
     @Id
     @GeneratedValue
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private UUID id;
 
     @NotNull

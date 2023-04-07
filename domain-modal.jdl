@@ -6,7 +6,7 @@ entity Beer {
 
 
 entity BeerBottle {
-  id UUID required,
+  id UUID,
   expirationDate LocalDate required,
 }
 
