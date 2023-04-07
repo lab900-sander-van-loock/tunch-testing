@@ -52,6 +52,7 @@ public class SecurityConfiguration {
         // @formatter:off
         http
             .csrf()
+            .ignoringAntMatchers("/h2-console/**")
             .disable()
             .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
             .exceptionHandling()
@@ -77,6 +78,7 @@ public class SecurityConfiguration {
             .antMatchers("/content/**").permitAll()
             .antMatchers("/swagger-ui/**").permitAll()
             .antMatchers("/test/**").permitAll()
+            .antMatchers("/h2-console/**").permitAll()
             .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()

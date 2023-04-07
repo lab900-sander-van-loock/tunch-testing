@@ -14,7 +14,7 @@
     "cypressAudit": false,
     "cypressCoverage": false,
     "databaseType": "sql",
-    "devDatabaseType": "mssql",
+    "devDatabaseType": "h2Memory",
     "devServerPort": 4200,
     "dtoSuffix": "DTO",
     "enableGradleEnterprise": false,
