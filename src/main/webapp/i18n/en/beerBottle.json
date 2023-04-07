@@ -1,0 +1,26 @@
+{
+  "tunchApp": {
+    "beerBottle": {
+      "home": {
+        "title": "Beer Bottles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Beer Bottle",
+        "createOrEditLabel": "Create or edit a Beer Bottle",
+        "notFound": "No Beer Bottles found"
+      },
+      "created": "A new Beer Bottle is created with identifier {{ param }}",
+      "updated": "A Beer Bottle is updated with identifier {{ param }}",
+      "deleted": "A Beer Bottle is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Beer Bottle {{ id }}?"
+      },
+      "detail": {
+        "title": "Beer Bottle"
+      },
+      "id": "Id",
+      "expirationDate": "Expiration Date",
+      "beer": "Beer",
+      "fridge": "Fridge"
+    }
+  }
+}

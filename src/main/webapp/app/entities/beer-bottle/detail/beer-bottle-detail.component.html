@@ -1,0 +1,44 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="beerBottle">
+      <h2 data-cy="beerBottleDetailsHeading"><span jhiTranslate="tunchApp.beerBottle.detail.title">Beer Bottle</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="tunchApp.beerBottle.id">Id</span></dt>
+        <dd>
+          <span>{{ beerBottle.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="tunchApp.beerBottle.expirationDate">Expiration Date</span></dt>
+        <dd>
+          <span>{{ beerBottle.expirationDate | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="tunchApp.beerBottle.beer">Beer</span></dt>
+        <dd>
+          <div *ngIf="beerBottle.beer">
+            <a [routerLink]="['/beer', beerBottle.beer.id, 'view']">{{ beerBottle.beer.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="tunchApp.beerBottle.fridge">Fridge</span></dt>
+        <dd>
+          <div *ngIf="beerBottle.fridge">
+            <a [routerLink]="['/fridge', beerBottle.fridge.id, 'view']">{{ beerBottle.fridge.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/beer-bottle', beerBottle.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

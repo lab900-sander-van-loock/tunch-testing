@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity BeerBottle.
+    -->
+    <changeSet id="20230407131023-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="beer_id"
+                                 baseTableName="beer_bottle"
+                                 constraintName="fk_beer_bottle__beer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="beer"/>
+
+        <addForeignKeyConstraint baseColumnNames="fridge_id"
+                                 baseTableName="beer_bottle"
+                                 constraintName="fk_beer_bottle__fridge_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="fridge"/>
+    </changeSet>
+</databaseChangeLog>

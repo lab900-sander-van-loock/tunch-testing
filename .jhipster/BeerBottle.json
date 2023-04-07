@@ -1,0 +1,38 @@
+{
+  "applications": "*",
+  "changelogDate": "20230407131023",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "beer_bottle",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "UUID",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "expirationDate",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "BeerBottle",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "beer",
+      "relationshipName": "beer",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "fridge",
+      "otherEntityRelationshipName": "beerBottle",
+      "relationshipName": "fridge",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,26 @@
+{
+  "tunchApp": {
+    "fridge": {
+      "home": {
+        "title": "Fridges",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Fridge",
+        "createOrEditLabel": "Create or edit a Fridge",
+        "notFound": "No Fridges found"
+      },
+      "created": "A new Fridge is created with identifier {{ param }}",
+      "updated": "A Fridge is updated with identifier {{ param }}",
+      "deleted": "A Fridge is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Fridge {{ id }}?"
+      },
+      "detail": {
+        "title": "Fridge"
+      },
+      "id": "ID",
+      "name": "Name",
+      "location": "Location",
+      "beerBottle": "Beer Bottle"
+    }
+  }
+}

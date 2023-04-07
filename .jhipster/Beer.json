@@ -1,0 +1,30 @@
+{
+  "applications": "*",
+  "changelogDate": "20230407131022",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "beer",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "brewery",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "percentage",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Beer",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

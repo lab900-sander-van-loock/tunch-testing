@@ -1,0 +1,32 @@
+{
+  "applications": "*",
+  "changelogDate": "20230407131024",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "fridge",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "location",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Fridge",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "beerBottle",
+      "otherEntityRelationshipName": "fridge",
+      "relationshipName": "beerBottle",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}

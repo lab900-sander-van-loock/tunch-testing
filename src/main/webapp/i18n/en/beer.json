@@ -1,0 +1,26 @@
+{
+  "tunchApp": {
+    "beer": {
+      "home": {
+        "title": "Beers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Beer",
+        "createOrEditLabel": "Create or edit a Beer",
+        "notFound": "No Beers found"
+      },
+      "created": "A new Beer is created with identifier {{ param }}",
+      "updated": "A Beer is updated with identifier {{ param }}",
+      "deleted": "A Beer is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Beer {{ id }}?"
+      },
+      "detail": {
+        "title": "Beer"
+      },
+      "id": "ID",
+      "name": "Name",
+      "brewery": "Brewery",
+      "percentage": "Percentage"
+    }
+  }
+}
