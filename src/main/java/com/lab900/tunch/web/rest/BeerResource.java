@@ -1,7 +1,8 @@
 package com.lab900.tunch.web.rest;
 
-import com.lab900.tunch.domain.Beer;
 import com.lab900.tunch.repository.BeerRepository;
+import com.lab900.tunch.service.BeerService;
+import com.lab900.tunch.service.dto.BeerDTO;
 import com.lab900.tunch.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,8 +15,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
@@ -24,7 +32,6 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class BeerResource {
 
     private final Logger log = LoggerFactory.getLogger(BeerResource.class);
@@ -34,26 +41,29 @@ public class BeerResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final BeerService beerService;
+
     private final BeerRepository beerRepository;
 
-    public BeerResource(BeerRepository beerRepository) {
+    public BeerResource(BeerService beerService, BeerRepository beerRepository) {
+        this.beerService = beerService;
         this.beerRepository = beerRepository;
     }
 
     /**
      * {@code POST  /beers} : Create a new beer.
      *
-     * @param beer the beer to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new beer, or with status {@code 400 (Bad Request)} if the beer has already an ID.
+     * @param beerDTO the beerDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new beerDTO, or with status {@code 400 (Bad Request)} if the beer has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/beers")
-    public ResponseEntity<Beer> createBeer(@Valid @RequestBody Beer beer) throws URISyntaxException {
-        log.debug("REST request to save Beer : {}", beer);
-        if (beer.getId() != null) {
+    public ResponseEntity<BeerDTO> createBeer(@Valid @RequestBody BeerDTO beerDTO) throws URISyntaxException {
+        log.debug("REST request to save Beer : {}", beerDTO);
+        if (beerDTO.getId() != null) {
             throw new BadRequestAlertException("A new beer cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Beer result = beerRepository.save(beer);
+        BeerDTO result = beerService.save(beerDTO);
         return ResponseEntity
             .created(new URI("/api/beers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -63,21 +73,23 @@ public class BeerResource {
     /**
      * {@code PUT  /beers/:id} : Updates an existing beer.
      *
-     * @param id the id of the beer to save.
-     * @param beer the beer to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated beer,
-     * or with status {@code 400 (Bad Request)} if the beer is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the beer couldn't be updated.
+     * @param id      the id of the beerDTO to save.
+     * @param beerDTO the beerDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated beerDTO,
+     * or with status {@code 400 (Bad Request)} if the beerDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the beerDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/beers/{id}")
-    public ResponseEntity<Beer> updateBeer(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Beer beer)
-        throws URISyntaxException {
-        log.debug("REST request to update Beer : {}, {}", id, beer);
-        if (beer.getId() == null) {
+    public ResponseEntity<BeerDTO> updateBeer(
+        @PathVariable(value = "id", required = false) final Long id,
+        @Valid @RequestBody BeerDTO beerDTO
+    ) throws URISyntaxException {
+        log.debug("REST request to update Beer : {}, {}", id, beerDTO);
+        if (beerDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, beer.getId())) {
+        if (!Objects.equals(id, beerDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -85,34 +97,34 @@ public class BeerResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Beer result = beerRepository.save(beer);
+        BeerDTO result = beerService.update(beerDTO);
         return ResponseEntity
             .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, beer.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, beerDTO.getId().toString()))
             .body(result);
     }
 
     /**
      * {@code PATCH  /beers/:id} : Partial updates given fields of an existing beer, field will ignore if it is null
      *
-     * @param id the id of the beer to save.
-     * @param beer the beer to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated beer,
-     * or with status {@code 400 (Bad Request)} if the beer is not valid,
-     * or with status {@code 404 (Not Found)} if the beer is not found,
-     * or with status {@code 500 (Internal Server Error)} if the beer couldn't be updated.
+     * @param id      the id of the beerDTO to save.
+     * @param beerDTO the beerDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated beerDTO,
+     * or with status {@code 400 (Bad Request)} if the beerDTO is not valid,
+     * or with status {@code 404 (Not Found)} if the beerDTO is not found,
+     * or with status {@code 500 (Internal Server Error)} if the beerDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/beers/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<Beer> partialUpdateBeer(
+    public ResponseEntity<BeerDTO> partialUpdateBeer(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody Beer beer
+        @NotNull @RequestBody BeerDTO beerDTO
     ) throws URISyntaxException {
-        log.debug("REST request to partial update Beer partially : {}, {}", id, beer);
-        if (beer.getId() == null) {
+        log.debug("REST request to partial update Beer partially : {}, {}", id, beerDTO);
+        if (beerDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, beer.getId())) {
+        if (!Objects.equals(id, beerDTO.getId())) {
             throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
         }
 
@@ -120,26 +132,11 @@ public class BeerResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Optional<Beer> result = beerRepository
-            .findById(beer.getId())
-            .map(existingBeer -> {
-                if (beer.getName() != null) {
-                    existingBeer.setName(beer.getName());
-                }
-                if (beer.getBrewery() != null) {
-                    existingBeer.setBrewery(beer.getBrewery());
-                }
-                if (beer.getPercentage() != null) {
-                    existingBeer.setPercentage(beer.getPercentage());
-                }
-
-                return existingBeer;
-            })
-            .map(beerRepository::save);
+        Optional<BeerDTO> result = beerService.partialUpdate(beerDTO);
 
         return ResponseUtil.wrapOrNotFound(
             result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, beer.getId().toString())
+            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, beerDTO.getId().toString())
         );
     }
 
@@ -149,34 +146,34 @@ public class BeerResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of beers in body.
      */
     @GetMapping("/beers")
-    public List<Beer> getAllBeers() {
+    public List<BeerDTO> getAllBeers() {
         log.debug("REST request to get all Beers");
-        return beerRepository.findAll();
+        return beerService.findAll();
     }
 
     /**
      * {@code GET  /beers/:id} : get the "id" beer.
      *
-     * @param id the id of the beer to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the beer, or with status {@code 404 (Not Found)}.
+     * @param id the id of the beerDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the beerDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/beers/{id}")
-    public ResponseEntity<Beer> getBeer(@PathVariable Long id) {
+    public ResponseEntity<BeerDTO> getBeer(@PathVariable Long id) {
         log.debug("REST request to get Beer : {}", id);
-        Optional<Beer> beer = beerRepository.findById(id);
-        return ResponseUtil.wrapOrNotFound(beer);
+        Optional<BeerDTO> beerDTO = beerService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(beerDTO);
     }
 
     /**
      * {@code DELETE  /beers/:id} : delete the "id" beer.
      *
-     * @param id the id of the beer to delete.
+     * @param id the id of the beerDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/beers/{id}")
     public ResponseEntity<Void> deleteBeer(@PathVariable Long id) {
         log.debug("REST request to delete Beer : {}", id);
-        beerRepository.deleteById(id);
+        beerService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))

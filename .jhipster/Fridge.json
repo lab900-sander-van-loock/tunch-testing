@@ -1,14 +1,16 @@
 {
   "applications": "*",
   "changelogDate": "20230407131024",
-  "dto": "no",
+  "dto": "mapstruct",
   "embedded": false,
   "entityTableName": "fridge",
   "fields": [
     {
       "fieldName": "name",
       "fieldType": "String",
-      "fieldValidateRules": ["required"]
+      "fieldValidateRules": [
+        "required"
+      ]
     },
     {
       "fieldName": "location",
@@ -28,5 +30,5 @@
       "relationshipType": "one-to-many"
     }
   ],
-  "service": "no"
+  "service": "serviceClass"
 }

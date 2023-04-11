@@ -3,6 +3,8 @@ package com.lab900.tunch.service.impl;
 import com.lab900.tunch.domain.BeerBottle;
 import com.lab900.tunch.repository.BeerBottleRepository;
 import com.lab900.tunch.service.BeerBottleService;
+import com.lab900.tunch.service.dto.BeerBottleDTO;
+import com.lab900.tunch.service.mapper.BeerBottleMapper;
 import java.util.Optional;
 import java.util.UUID;
 import org.slf4j.Logger;
@@ -23,50 +25,56 @@ public class BeerBottleServiceImpl implements BeerBottleService {
 
     private final BeerBottleRepository beerBottleRepository;
 
-    public BeerBottleServiceImpl(BeerBottleRepository beerBottleRepository) {
+    private final BeerBottleMapper beerBottleMapper;
+
+    public BeerBottleServiceImpl(BeerBottleRepository beerBottleRepository, BeerBottleMapper beerBottleMapper) {
         this.beerBottleRepository = beerBottleRepository;
+        this.beerBottleMapper = beerBottleMapper;
     }
 
     @Override
-    public BeerBottle save(BeerBottle beerBottle) {
-        log.debug("Request to save BeerBottle : {}", beerBottle);
-        return beerBottleRepository.save(beerBottle);
+    public BeerBottleDTO save(BeerBottleDTO beerBottleDTO) {
+        log.debug("Request to save BeerBottle : {}", beerBottleDTO);
+        BeerBottle beerBottle = beerBottleMapper.toEntity(beerBottleDTO);
+        beerBottle = beerBottleRepository.save(beerBottle);
+        return beerBottleMapper.toDto(beerBottle);
     }
 
     @Override
-    public BeerBottle update(BeerBottle beerBottle) {
-        log.debug("Request to update BeerBottle : {}", beerBottle);
-        return beerBottleRepository.save(beerBottle);
+    public BeerBottleDTO update(BeerBottleDTO beerBottleDTO) {
+        log.debug("Request to update BeerBottle : {}", beerBottleDTO);
+        BeerBottle beerBottle = beerBottleMapper.toEntity(beerBottleDTO);
+        beerBottle = beerBottleRepository.save(beerBottle);
+        return beerBottleMapper.toDto(beerBottle);
     }
 
     @Override
-    public Optional<BeerBottle> partialUpdate(BeerBottle beerBottle) {
-        log.debug("Request to partially update BeerBottle : {}", beerBottle);
+    public Optional<BeerBottleDTO> partialUpdate(BeerBottleDTO beerBottleDTO) {
+        log.debug("Request to partially update BeerBottle : {}", beerBottleDTO);
 
         return beerBottleRepository
-            .findById(beerBottle.getId())
+            .findById(beerBottleDTO.getId())
             .map(existingBeerBottle -> {
-                if (beerBottle.getExpirationDate() != null) {
-                    existingBeerBottle.setExpirationDate(beerBottle.getExpirationDate());
-                }
+                beerBottleMapper.partialUpdate(existingBeerBottle, beerBottleDTO);
 
                 return existingBeerBottle;
             })
-            .map(beerBottleRepository::save);
+            .map(beerBottleRepository::save)
+            .map(beerBottleMapper::toDto);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<BeerBottle> findAll(Pageable pageable) {
+    public Page<BeerBottleDTO> findAll(Pageable pageable) {
         log.debug("Request to get all BeerBottles");
-        return beerBottleRepository.findAll(pageable);
+        return beerBottleRepository.findAll(pageable).map(beerBottleMapper::toDto);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<BeerBottle> findOne(UUID id) {
+    public Optional<BeerBottleDTO> findOne(UUID id) {
         log.debug("Request to get BeerBottle : {}", id);
-        return beerBottleRepository.findById(id);
+        return beerBottleRepository.findById(id).map(beerBottleMapper::toDto);
     }
 
     @Override

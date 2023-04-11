@@ -1,14 +1,16 @@
 {
   "applications": "*",
   "changelogDate": "20230407131022",
-  "dto": "no",
+  "dto": "mapstruct",
   "embedded": false,
   "entityTableName": "beer",
   "fields": [
     {
       "fieldName": "name",
       "fieldType": "String",
-      "fieldValidateRules": ["required"]
+      "fieldValidateRules": [
+        "required"
+      ]
     },
     {
       "fieldName": "brewery",
@@ -26,5 +28,5 @@
   "pagination": "no",
   "readOnly": false,
   "relationships": [],
-  "service": "no"
+  "service": "serviceClass"
 }

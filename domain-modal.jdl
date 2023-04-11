@@ -28,3 +28,5 @@ relationship OneToMany {
 paginate BeerBottle with pagination
 
 service all with serviceImpl except Beer, Fridge
+
+dto * with mapstruct

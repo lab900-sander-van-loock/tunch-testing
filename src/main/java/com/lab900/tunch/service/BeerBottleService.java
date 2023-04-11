@@ -1,38 +1,38 @@
 package com.lab900.tunch.service;
 
-import com.lab900.tunch.domain.BeerBottle;
+import com.lab900.tunch.service.dto.BeerBottleDTO;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 /**
- * Service Interface for managing {@link BeerBottle}.
+ * Service Interface for managing {@link com.lab900.tunch.domain.BeerBottle}.
  */
 public interface BeerBottleService {
     /**
      * Save a beerBottle.
      *
-     * @param beerBottle the entity to save.
+     * @param beerBottleDTO the entity to save.
      * @return the persisted entity.
      */
-    BeerBottle save(BeerBottle beerBottle);
+    BeerBottleDTO save(BeerBottleDTO beerBottleDTO);
 
     /**
      * Updates a beerBottle.
      *
-     * @param beerBottle the entity to update.
+     * @param beerBottleDTO the entity to update.
      * @return the persisted entity.
      */
-    BeerBottle update(BeerBottle beerBottle);
+    BeerBottleDTO update(BeerBottleDTO beerBottleDTO);
 
     /**
      * Partially updates a beerBottle.
      *
-     * @param beerBottle the entity to update partially.
+     * @param beerBottleDTO the entity to update partially.
      * @return the persisted entity.
      */
-    Optional<BeerBottle> partialUpdate(BeerBottle beerBottle);
+    Optional<BeerBottleDTO> partialUpdate(BeerBottleDTO beerBottleDTO);
 
     /**
      * Get all the beerBottles.
@@ -40,7 +40,7 @@ public interface BeerBottleService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<BeerBottle> findAll(Pageable pageable);
+    Page<BeerBottleDTO> findAll(Pageable pageable);
 
     /**
      * Get the "id" beerBottle.
@@ -48,7 +48,7 @@ public interface BeerBottleService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<BeerBottle> findOne(UUID id);
+    Optional<BeerBottleDTO> findOne(UUID id);
 
     /**
      * Delete the "id" beerBottle.
