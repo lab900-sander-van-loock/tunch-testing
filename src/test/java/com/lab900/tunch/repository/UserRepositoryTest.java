@@ -3,15 +3,18 @@ package com.lab900.tunch.repository;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
+import com.lab900.tunch.config.ApplicationProperties;
 import com.lab900.tunch.domain.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration;
+import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.ActiveProfiles;
 
-@DataJpaTest
-@ActiveProfiles("testdev")
+@DataJpaTest(excludeAutoConfiguration = { LiquibaseAutoConfiguration.class })
+@EnableConfigurationProperties({ LiquibaseProperties.class, ApplicationProperties.class })
 class UserRepositoryTest {
 
     @Autowired
