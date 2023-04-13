@@ -51,8 +51,7 @@ public class MailService {
         this.templateEngine = templateEngine;
     }
 
-    @Async
-    public void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml) {
+    private void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml) {
         log.debug(
             "Send email[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}",
             isMultipart,
@@ -77,8 +76,7 @@ public class MailService {
         }
     }
 
-    @Async
-    public void sendEmailFromTemplate(User user, String templateName, String titleKey) {
+    private void sendEmailFromTemplate(User user, String templateName, String titleKey) {
         if (user.getEmail() == null) {
             log.debug("Email doesn't exist for user '{}'", user.getLogin());
             return;
