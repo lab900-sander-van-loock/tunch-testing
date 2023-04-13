@@ -4,10 +4,14 @@ import com.lab900.tunch.domain.Fridge;
 import com.lab900.tunch.repository.FridgeRepository;
 import com.lab900.tunch.service.dto.FridgeDTO;
 import com.lab900.tunch.service.mapper.FridgeMapper;
+
+import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -108,5 +112,12 @@ public class FridgeService {
     public void delete(Long id) {
         log.debug("Request to delete Fridge : {}", id);
         fridgeRepository.deleteById(id);
+    }
+
+    public Duration howTongToCoolUntil(BigDecimal targetTemperatureDegreesCelsius) {
+        if (BigDecimal.ZERO.compareTo(targetTemperatureDegreesCelsius) < 0) {
+            throw new IllegalArgumentException("Target temperature must be positive");
+        }
+        return Duration.ofSeconds((long) (Math.random() * 200));
     }
 }
