@@ -7,7 +7,6 @@ import com.lab900.tunch.domain.Fridge;
 import com.lab900.tunch.repository.FridgeRepository;
 import com.lab900.tunch.service.FridgeService;
 import org.assertj.core.api.Assertions;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -19,13 +18,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
-import java.time.Duration;
 import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@DirtiesContext
 @ContextConfiguration(classes = TunchApp.class)
-public class FridgeServiceTest {
+public class FridgeServiceTestDirties2 {
 
     @MockBean
     private FridgeRepository fridgeRepository;
