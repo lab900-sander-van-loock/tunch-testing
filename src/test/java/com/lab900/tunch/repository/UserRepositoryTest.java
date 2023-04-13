@@ -1,5 +1,9 @@
 package com.lab900.tunch.repository;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+
+import com.lab900.tunch.domain.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -14,11 +18,19 @@ class UserRepositoryTest {
     private TestEntityManager entityManager;
 
     @Autowired
-    private UserRepository UserRepository;
+    private UserRepository userRepository;
 
     @Test
     void findOneByEmailIgnoreCase() {
-        //        new User()
+        var user = new User();
+        user.setFirstName("Koen");
+        user.setLastName("De Vos");
+        user.setEmail("koen.daelman@lab900.com");
 
+        entityManager.persist(user);
+        entityManager.flush();
+
+        var oneByEmailIgnoreCase = userRepository.findOneByEmailIgnoreCase(user.getEmail().toUpperCase());
+        assertThat(oneByEmailIgnoreCase.isPresent(), equalTo(true));
     }
 }
