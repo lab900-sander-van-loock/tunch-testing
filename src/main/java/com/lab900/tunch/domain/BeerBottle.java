@@ -35,6 +35,12 @@ public class BeerBottle implements Serializable {
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
+    public BeerBottle() {}
+
+    public BeerBottle(Beer beer) {
+        this.beer = beer;
+    }
+
     public UUID getId() {
         return this.id;
     }

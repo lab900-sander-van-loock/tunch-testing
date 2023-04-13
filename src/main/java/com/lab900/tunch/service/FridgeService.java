@@ -1,5 +1,6 @@
 package com.lab900.tunch.service;
 
+import com.lab900.tunch.domain.AreYouCrazyException;
 import com.lab900.tunch.domain.BeerBottle;
 import com.lab900.tunch.domain.Fridge;
 import com.lab900.tunch.repository.FridgeRepository;
@@ -115,9 +116,11 @@ public class FridgeService {
         fridgeRepository.deleteById(id);
     }
 
-    public Duration howTongToCoolUntil(BeerBottle bottle, BigDecimal targetTemperatureDegreesCelsius) {
+    public Duration howTongToCoolUntilReached(BeerBottle bottle, BigDecimal targetTemperatureDegreesCelsius) throws AreYouCrazyException {
         if (BigDecimal.ZERO.compareTo(targetTemperatureDegreesCelsius) < 0) {
-            throw new IllegalArgumentException("Target temperature must be positive");
+            throw new AreYouCrazyException("Beer shouldn't be this cold!");
+        } else if(BigDecimal.TEN.compareTo(targetTemperatureDegreesCelsius) > 0) {
+            throw new AreYouCrazyException("Beer shouldn't be this hot!");
         }
         return Duration.ofSeconds((long) (targetTemperatureDegreesCelsius.doubleValue() * 60));
     }
