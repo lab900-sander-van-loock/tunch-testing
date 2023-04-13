@@ -61,6 +61,10 @@ public class BeerBottle implements Serializable {
         this.expirationDate = expirationDate;
     }
 
+    public boolean isExpired() {
+        return LocalDate.now().isAfter(this.expirationDate);
+    }
+
     public Beer getBeer() {
         return this.beer;
     }
