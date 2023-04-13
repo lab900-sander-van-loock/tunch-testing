@@ -1,5 +1,6 @@
 package com.lab900.tunch.service;
 
+import com.lab900.tunch.domain.BeerBottle;
 import com.lab900.tunch.domain.Fridge;
 import com.lab900.tunch.repository.FridgeRepository;
 import com.lab900.tunch.service.dto.FridgeDTO;
@@ -114,10 +115,10 @@ public class FridgeService {
         fridgeRepository.deleteById(id);
     }
 
-    public Duration howTongToCoolUntil(BigDecimal targetTemperatureDegreesCelsius) {
+    public Duration howTongToCoolUntil(BeerBottle bottle, BigDecimal targetTemperatureDegreesCelsius) {
         if (BigDecimal.ZERO.compareTo(targetTemperatureDegreesCelsius) < 0) {
             throw new IllegalArgumentException("Target temperature must be positive");
         }
-        return Duration.ofSeconds((long) (Math.random() * 200));
+        return Duration.ofSeconds((long) (targetTemperatureDegreesCelsius.doubleValue() * 60));
     }
 }
